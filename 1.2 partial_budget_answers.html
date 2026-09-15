@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Partial Budget Exercise — Answer Key</title>
+<style>
+  :root {
+    --ink: #1f2a24;
+    --muted: #5b6b62;
+    --line: #d8e0da;
+    --accent: #b0472e;
+    --accent-light: #f6e8e4;
+    --bg: #fbfaf7;
+    --card: #ffffff;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Georgia", "Iowan Old Style", serif;
+    background: var(--bg);
+    color: var(--ink);
+    margin: 0;
+    padding: 0 20px 60px;
+    line-height: 1.55;
+  }
+  .page { max-width: 800px; margin: 0 auto; }
+  header.title-block {
+    border-bottom: 3px solid var(--accent);
+    padding: 36px 0 20px;
+    margin-bottom: 30px;
+  }
+  h1 {
+    font-size: 1.6rem;
+    margin: 0 0 10px;
+    color: var(--accent);
+    font-family: "Helvetica Neue", Arial, sans-serif;
+  }
+  .meta { font-family: "Helvetica Neue", Arial, sans-serif; font-size: 0.95rem; color: var(--muted); }
+  .badge {
+    display: inline-block;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: var(--accent);
+    color: #fff;
+    padding: 4px 12px;
+    border-radius: 999px;
+    margin-bottom: 14px;
+  }
+  h2 {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 1.2rem;
+    color: var(--accent);
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 6px;
+    margin-top: 46px;
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--accent);
+    border-radius: 6px;
+    padding: 18px 22px;
+    margin: 16px 0;
+  }
+  .card ul { margin: 8px 0; padding-left: 22px; }
+  .card li { margin: 7px 0; }
+  .result {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    background: var(--accent-light);
+    border-radius: 5px;
+    padding: 10px 16px;
+    margin: 14px 0;
+    font-weight: 600;
+  }
+  pre {
+    font-family: "SFMono-Regular", Consolas, Menlo, monospace;
+    font-size: 0.9rem;
+    background: #f1f5f2;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 10px 14px;
+    overflow-x: auto;
+    margin: 10px 0;
+  }
+  .discussion {
+    margin-top: 50px;
+  }
+  .discussion ol { padding-left: 22px; }
+  .discussion li { margin: 10px 0; }
+  footer {
+    margin-top: 60px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+  @media print {
+    body { background: #fff; }
+    .card { break-inside: avoid; }
+    h2 { break-after: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<header class="title-block">
+  <span class="badge">Instructor Copy</span>
+  <h1>Partial Budget Exercise — Answer Key</h1>
+  <div class="meta">Corresponds to the three practice scenarios in <code>partial_budget_exercise.html</code>. The worked example lives separately in <code>partial_budget_example.html</code> and is not repeated here.</div>
+</header>
+
+<h2>Scenario 1: Selective Dry Cow Therapy</h2>
+<div class="card">
+  <ul>
+    <li><strong>Cow split under SDCT:</strong> 90 × 55% = 49.5 ≈ 50 cows high-SCC (antibiotic); 40 cows low-SCC (sealant only).</li>
+    <li><strong>Cost under blanket therapy:</strong> 90 × 180 = 16,200 THB</li>
+    <li><strong>Cost under SDCT:</strong> (50 × 180) + (40 × 90) = 9,000 + 3,600 = 12,600 THB → <strong>reduced cost (B) = 16,200 − 12,600 = 3,600 THB</strong></li>
+    <li><strong>Added SCC testing cost (D):</strong> 90 × 40 = 3,600 THB</li>
+    <li><strong>Added mastitis cost (D):</strong> 2 × 3,200 = 6,400 THB</li>
+  </ul>
+  <pre>Net change = (0 + 3,600) − (0 + 3,600 + 6,400) = 3,600 − 10,000 = −6,400 THB/year</pre>
+  <div class="result">Recommendation: Do not adopt as designed — added mastitis and testing costs outweigh drug savings.</div>
+  <p><em>Discussion point for class:</em> SDCT is usually still recommended in practice for antimicrobial stewardship reasons that a narrow financial partial budget doesn't capture — good prompt for discussing the limits of this tool.</p>
+</div>
+
+<h2>Scenario 2: Automated Calf Feeder</h2>
+<div class="card">
+  <ul>
+    <li><strong>Lease fee (D):</strong> 60,000 THB/year (given directly)</li>
+    <li><strong>Maintenance/electricity (D):</strong> 12,000 THB/year</li>
+    <li><strong>Labor saved (B):</strong> manual = 1.5 hr × 80 × 365 = 43,800 THB/year; automated = (20/60) hr × 80 × 365 = 9,733 THB/year → savings ≈ 34,067 THB/year</li>
+    <li><strong>Added revenue from faster weaning weight gain (A):</strong> 40 calves × 4 kg × 65 THB = 10,400 THB/year</li>
+  </ul>
+  <pre>Net change = (10,400 + 34,067) − (0 + 60,000 + 12,000) = 44,467 − 72,000 = −27,533 THB/year</pre>
+  <div class="result">Recommendation: Do not adopt at this scale/price — labor and weight-gain benefits do not cover the lease and maintenance cost.</div>
+  <p><strong>Sensitivity check:</strong> raising maintenance by 50% (to 18,000) worsens the loss further (net ≈ −33,533 THB); it does not change the recommendation, since the investment is already unprofitable at the base estimate.</p>
+</div>
+
+<h2>Scenario 3: Herd Vaccination</h2>
+<div class="card">
+  <ul>
+    <li><strong>Expected annual abortion cost without vaccination:</strong> (1/5) × 18 × 22,000 = 79,200 THB/year</li>
+    <li><strong>Expected annual abortion cost with vaccination:</strong> (1/5) × (18 × 0.20) × 22,000 = 15,840 THB/year</li>
+    <li><strong>Reduced cost (B):</strong> 79,200 − 15,840 = 63,360 THB/year</li>
+    <li><strong>Vaccination cost (D):</strong> 120 × (220 + 15) = 28,200 THB/year</li>
+  </ul>
+  <pre>Net change = (0 + 63,360) − (0 + 28,200) = +35,160 THB/year</pre>
+  <div class="result">Recommendation: Vaccinate — expected savings substantially exceed the annual vaccine program cost.</div>
+  <p><strong>Discussion (1-in-10-year scenario):</strong> expected cost without vaccination halves to ≈39,600 THB/year, and with vaccination to ≈7,920 THB/year; reduced cost (B) becomes ≈31,680 THB — still above the 28,200 THB vaccination cost, so the recommendation likely still holds, but the margin is much narrower. Good point for discussing sensitivity to disease-probability estimates.</p>
+</div>
+
+<footer>
+  <p>Student worksheet: <code>partial_budget_exercise.html</code></p>
+</footer>
+
+</div>
+</body>
+</html>

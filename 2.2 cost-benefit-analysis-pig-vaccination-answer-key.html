@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Answer Key — Cost-Benefit Analysis: Pig Vaccination Investment (6-Year NPV)</title>
+<style>
+  :root {
+    --barn-red: #6B2B23;
+    --barn-red-dark: #4E1F19;
+    --cream: #FBF6EC;
+    --cream-alt: #F1E9D8;
+    --pasture-green: #4B6B4E;
+    --pasture-green-dark: #34492F;
+    --straw-gold: #C99A3D;
+    --given-blue: #E4EDF5;
+    --given-blue-text: #2C4A63;
+    --answer-green: #EAF3E9;
+    --answer-green-text: #2E4A31;
+    --ink: #2C2420;
+    --muted: #7A6F5E;
+    --border: #D9CDB8;
+    --font-head: Georgia, 'Iowan Old Style', 'Palatino Linotype', 'Book Antiqua', serif;
+    --font-body: 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--cream);
+    color: var(--ink);
+    font-family: var(--font-body);
+    line-height: 1.5;
+  }
+
+  .hero {
+    background: var(--barn-red);
+    color: var(--cream);
+    padding: 2.2rem 1.5rem 1.8rem;
+    border-bottom: 6px solid var(--straw-gold);
+  }
+
+  .hero-inner {
+    max-width: 1080px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 1.75rem;
+  }
+
+  .hero-text h1 {
+    font-family: var(--font-head);
+    font-size: 1.6rem;
+    margin: 0 0 0.4rem;
+    font-weight: 600;
+  }
+
+  .hero-text p {
+    margin: 0;
+    max-width: 56ch;
+    color: var(--cream-alt);
+    font-size: 0.95rem;
+  }
+
+  .badge {
+    display: inline-block;
+    background: var(--straw-gold);
+    color: var(--barn-red-dark);
+    font-weight: 700;
+    font-size: 0.78rem;
+    letter-spacing: 0.02em;
+    padding: 0.2rem 0.6rem;
+    border-radius: 3px;
+    margin-bottom: 0.5rem;
+  }
+
+  .pig-icon { flex: 0 0 auto; width: 80px; height: 64px; }
+
+  main {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  h2.step-title {
+    font-family: var(--font-head);
+    font-size: 1.2rem;
+    margin: 2.1rem 0 0.7rem;
+    color: var(--barn-red-dark);
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+  }
+
+  h2.step-title .step-num {
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--cream);
+    background: var(--pasture-green);
+    padding: 0.15rem 0.55rem;
+    border-radius: 3px;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.1rem;
+    font-size: 0.84rem;
+    color: var(--muted);
+    margin: 0.2rem 0 0.9rem;
+  }
+  .legend span { display: inline-flex; align-items: center; gap: 0.4rem; }
+  .swatch { width: 0.85rem; height: 0.85rem; border-radius: 2px; display: inline-block; border: 1px solid var(--border); }
+  .swatch.given { background: var(--given-blue); }
+  .swatch.answer { background: var(--answer-green); }
+
+  .assumption-note {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #FBF2DC;
+    border: 1px solid var(--straw-gold);
+    color: var(--barn-red-dark);
+    border-radius: 5px;
+    padding: 0.5rem 0.9rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin: 0.2rem 0 1rem;
+  }
+
+  .table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    margin-bottom: 0.4rem;
+  }
+
+  table.ledger {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    min-width: 900px;
+  }
+
+  table.ledger thead th {
+    background: var(--barn-red);
+    color: var(--cream);
+    text-align: right;
+    padding: 0.55rem 0.5rem;
+    font-weight: 600;
+    font-size: 0.78rem;
+    white-space: nowrap;
+  }
+
+  table.ledger thead th.item-col,
+  table.ledger tbody td.item-col {
+    text-align: left;
+    position: sticky;
+    left: 0;
+    z-index: 2;
+    min-width: 230px;
+    max-width: 260px;
+  }
+  table.ledger thead th.item-col { background: var(--barn-red); z-index: 3; }
+
+  table.ledger thead th.unit-col,
+  table.ledger tbody td.unit-col { text-align: left; min-width: 60px; color: var(--muted); font-size: 0.78rem; }
+
+  table.ledger tbody td {
+    padding: 0.5rem 0.5rem;
+    border-top: 1px solid var(--border);
+    vertical-align: top;
+    background: var(--cream);
+  }
+
+  table.ledger tbody tr.given-row td { background: var(--given-blue); color: var(--given-blue-text); }
+  table.ledger tbody tr.answer-row td { background: var(--answer-green); color: var(--answer-green-text); }
+  table.ledger tbody td.num-col { text-align: right; font-variant-numeric: tabular-nums; }
+
+  table.ledger tbody tr.total-row td {
+    border-top: 2px solid var(--barn-red);
+    font-weight: 700;
+  }
+
+  .item-name { font-weight: 600; display: block; }
+  .formula-hint {
+    display: block;
+    font-weight: 400;
+    color: var(--muted);
+    font-size: 0.76rem;
+    margin-top: 0.15rem;
+    font-style: italic;
+  }
+  .dash { color: var(--muted); }
+
+  .summary-table { width: 100%; border-collapse: collapse; font-size: 0.92rem; margin-top: 0.3rem; }
+  .summary-table td { padding: 0.6rem 0.7rem; border-top: 1px solid var(--border); }
+  .summary-table tr:first-child td { border-top: none; }
+  .summary-table td.metric-name { font-weight: 600; width: 55%; }
+  .summary-table td.metric-value { text-align: right; font-weight: 700; background: var(--answer-green); color: var(--answer-green-text); }
+  .summary-table .formula-hint { margin-top: 0.1rem; }
+
+  .decision-box {
+    background: var(--answer-green);
+    color: var(--answer-green-text);
+    border: 1px solid var(--pasture-green);
+    border-radius: 6px;
+    padding: 1rem 1.2rem;
+    margin-top: 0.5rem;
+    font-size: 0.95rem;
+  }
+  .decision-box strong { font-family: var(--font-head); font-size: 1.02rem; }
+
+  footer { max-width: 1080px; margin: 0 auto; padding: 0 1.5rem 2rem; color: var(--muted); font-size: 0.82rem; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <svg class="pig-icon" viewBox="0 0 220 160" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M186 70 q18 -10 8 -22 q-10 -10 2 -18" fill="none" stroke="#FBF6EC" stroke-width="4" stroke-linecap="round"/>
+      <ellipse cx="112" cy="95" rx="78" ry="46" fill="#E4A7A0" stroke="#FBF6EC" stroke-width="3"/>
+      <rect x="70" y="128" width="12" height="24" rx="4" fill="#E4A7A0" stroke="#FBF6EC" stroke-width="2"/>
+      <rect x="150" y="128" width="12" height="24" rx="4" fill="#E4A7A0" stroke="#FBF6EC" stroke-width="2"/>
+      <circle cx="46" cy="68" r="37" fill="#E4A7A0" stroke="#FBF6EC" stroke-width="3"/>
+      <path d="M26 38 L16 14 L46 33 Z" fill="#E4A7A0" stroke="#FBF6EC" stroke-width="3" stroke-linejoin="round"/>
+      <ellipse cx="18" cy="74" rx="16" ry="12" fill="#C97C74" stroke="#FBF6EC" stroke-width="3"/>
+      <circle cx="12" cy="74" r="2.4" fill="#4E1F19"/>
+      <circle cx="23" cy="74" r="2.4" fill="#4E1F19"/>
+      <circle cx="50" cy="58" r="4" fill="#4E1F19"/>
+    </svg>
+    <div class="hero-text">
+      <span class="badge">Answer key</span>
+      <h1>Cost-Benefit Analysis: A 6-Year Vaccination Investment</h1>
+      <p>Fully worked table for the Golden Field Farm pig vaccination exercise — not for student distribution.</p>
+    </div>
+  </div>
+</div>
+
+<main>
+  <div class="assumption-note">Interest rate used for discounting: r = 6% per year (given)</div>
+
+  <div class="legend">
+    <span><span class="swatch given"></span> given data</span>
+    <span><span class="swatch answer"></span> worked answer</span>
+  </div>
+
+  <h2 class="step-title"><span class="step-num">Section 1</span> Benefit — avoided losses (THB)</h2>
+  <div class="table-wrap">
+    <table class="ledger" id="benefitTable">
+      <thead><tr id="benefitHeadRow"></tr></thead>
+      <tbody id="benefitBody"></tbody>
+    </table>
+  </div>
+
+  <h2 class="step-title"><span class="step-num">Section 2</span> Cost — vaccination program (THB)</h2>
+  <div class="table-wrap">
+    <table class="ledger" id="costTable">
+      <thead><tr id="costHeadRow"></tr></thead>
+      <tbody id="costBody"></tbody>
+    </table>
+  </div>
+
+  <h2 class="step-title"><span class="step-num">Section 3</span> Net value and discounted cash flow</h2>
+  <div class="table-wrap">
+    <table class="ledger" id="section3Table">
+      <thead><tr id="section3HeadRow"></tr></thead>
+      <tbody id="section3Body"></tbody>
+    </table>
+  </div>
+
+  <h2 class="step-title"><span class="step-num">Section 4</span> Summary metrics</h2>
+  <table class="summary-table" id="summaryTable"></table>
+
+  <h2 class="step-title"><span class="step-num">Section 5</span> Decision</h2>
+  <div class="decision-box">
+    <strong>Yes — invest in the vaccination program.</strong>
+    Net present value is positive (about 784,557 THB) and the cost-benefit ratio is well above
+    1 (about 3.04), meaning every baht spent on the program returns roughly 3 baht in avoided
+    losses over the six years.
+  </div>
+</main>
+
+<footer>
+  Answer key for the pig vaccination cost-benefit exercise. Pairs with the fillable student
+  version of this file. Figures are illustrative, not real market prices.
+</footer>
+
+<script>
+  const YEAR_LABELS = ['Year 0','Year 1','Year 2','Year 3','Year 4','Year 5','Year 6'];
+  const R = 0.06;
+  const sum = arr => arr.reduce((a, b) => a + b, 0);
+
+  function fmt(n, decimals) {
+    if (n === null || n === undefined) return '\u2014';
+    return n.toLocaleString('en-US', { minimumFractionDigits: decimals || 0, maximumFractionDigits: decimals || 0 });
+  }
+
+  // ---- Given data (identical to the student exercise) ----
+  const givenRows = [
+    { label: 'Avoided mortality loss', unit: 'THB/yr', values: [0,180000,180000,180000,180000,180000,180000] },
+    { label: 'Avoided growth/performance loss', unit: 'THB/yr', values: [0,48000,48000,48000,48000,48000,48000] },
+    { label: 'Avoided treatment cost', unit: 'THB/yr', values: [0,9600,9600,9600,9600,9600,9600] }
+  ];
+  const costGivenRows = [
+    { label: 'Capital cost (fridge, syringes, training)', unit: 'THB', values: [15000,0,0,0,0,0,0] },
+    { label: 'Fixed cost (annual supervision/records)', unit: 'THB/yr', values: [0,2000,2000,2000,2000,2000,2000] },
+    { label: 'Variable cost (vaccine + labor)', unit: 'THB/yr', values: [0,73000,73000,73000,73000,73000,73000] }
+  ];
+
+  // ---- Worked (correct) values ----
+  const totalBenefit = YEAR_LABELS.map((_, y) => givenRows.reduce((s, r) => s + r.values[y], 0));
+  const totalCost = YEAR_LABELS.map((_, y) => costGivenRows.reduce((s, r) => s + r.values[y], 0));
+  const netValue = YEAR_LABELS.map((_, y) => totalBenefit[y] - totalCost[y]);
+  const discountFactor = YEAR_LABELS.map((_, y) => 1 / Math.pow(1 + R, y));
+  const discountedBenefit = YEAR_LABELS.map((_, y) => totalBenefit[y] * discountFactor[y]);
+  const discountedCost = YEAR_LABELS.map((_, y) => totalCost[y] * discountFactor[y]);
+  const npv = YEAR_LABELS.map((_, y) => discountedBenefit[y] - discountedCost[y]);
+  const cumulativeNPV = npv.reduce((acc, v, i) => { acc.push((acc[i - 1] || 0) + v); return acc; }, []);
+
+  const totalBenefitSum = sum(totalBenefit);
+  const totalCostSum = sum(totalCost);
+  const netValueSum = sum(netValue);
+  const discountedBenefitSum = sum(discountedBenefit);
+  const discountedCostSum = sum(discountedCost);
+  const npvSum = sum(npv);
+  const cbr = discountedBenefitSum / discountedCostSum;
+
+  const benefitTotalRow = { label: 'Total Annual Benefit', unit: 'THB/yr', hint: 'sum of the avoided-loss rows above', values: totalBenefit, total: totalBenefitSum, totalRow: true };
+  const costTotalRow = { label: 'Total Annual Cost', unit: 'THB/yr', hint: 'sum of the cost rows above', values: totalCost, total: totalCostSum, totalRow: true };
+  const section3Rows = [
+    { label: 'Net value (undiscounted)', unit: 'THB/yr', hint: 'Total Annual Benefit \u2212 Total Annual Cost', values: netValue, total: netValueSum },
+    { label: 'Discount factor (r = 6%)', unit: '\u2014', hint: '1 \u00f7 (1 + r)^year', values: discountFactor, total: null, decimals: 4 },
+    { label: 'Discounted benefit', unit: 'THB/yr', hint: 'Total Annual Benefit \u00d7 discount factor', values: discountedBenefit, total: discountedBenefitSum },
+    { label: 'Discounted cost', unit: 'THB/yr', hint: 'Total Annual Cost \u00d7 discount factor', values: discountedCost, total: discountedCostSum },
+    { label: 'Net present value (per year)', unit: 'THB/yr', hint: 'discounted benefit \u2212 discounted cost', values: npv, total: npvSum },
+    { label: 'Cumulative NPV', unit: 'THB', hint: 'running sum of NPV per year', values: cumulativeNPV, total: npvSum }
+  ];
+  const summaryRows = [
+    { label: 'Total benefits (6-yr, undiscounted)', hint: 'Total column, Total Annual Benefit row', answer: totalBenefitSum },
+    { label: 'Total costs (6-yr, undiscounted)', hint: 'Total column, Total Annual Cost row', answer: totalCostSum },
+    { label: 'Net value (6-yr, undiscounted)', hint: 'total benefits \u2212 total costs', answer: netValueSum },
+    { label: 'Net present value \u2013 NPV', hint: 'sum of NPV per year', answer: npvSum },
+    { label: 'Cost-benefit ratio \u2013 CBR', hint: 'total discounted benefit \u00f7 total discounted cost', answer: cbr, isRatio: true }
+  ];
+
+  function headerHTML() {
+    let h = '<th class="item-col">Item</th><th class="unit-col">Unit</th>';
+    YEAR_LABELS.forEach(y => { h += '<th>' + y + '</th>'; });
+    h += '<th>Total</th>';
+    return h;
+  }
+  document.getElementById('benefitHeadRow').innerHTML = headerHTML();
+  document.getElementById('costHeadRow').innerHTML = headerHTML();
+  document.getElementById('section3HeadRow').innerHTML = headerHTML();
+
+  function givenRowHTML(row) {
+    let h = '<tr class="given-row"><td class="item-col"><span class="item-name">' + row.label + '</span></td>';
+    h += '<td class="unit-col">' + row.unit + '</td>';
+    row.values.forEach(v => { h += '<td class="num-col">' + fmt(v) + '</td>'; });
+    h += '<td class="num-col">' + fmt(sum(row.values)) + '</td></tr>';
+    return h;
+  }
+
+  function answerRowHTML(row) {
+    let h = '<tr class="answer-row' + (row.totalRow ? ' total-row' : '') + '"><td class="item-col"><span class="item-name">' + row.label +
+      '</span><span class="formula-hint">' + row.hint + '</span></td>';
+    h += '<td class="unit-col">' + row.unit + '</td>';
+    row.values.forEach(v => {
+      h += '<td class="num-col">' + (row.decimals ? v.toFixed(row.decimals) : fmt(Math.round(v))) + '</td>';
+    });
+    h += '<td class="num-col">' + (row.total !== null ? fmt(Math.round(row.total)) : '<span class="dash">\u2014</span>') + '</td>';
+    h += '</tr>';
+    return h;
+  }
+
+  document.getElementById('benefitBody').innerHTML =
+    givenRows.map(givenRowHTML).join('') + answerRowHTML(benefitTotalRow);
+  document.getElementById('costBody').innerHTML =
+    costGivenRows.map(givenRowHTML).join('') + answerRowHTML(costTotalRow);
+  document.getElementById('section3Body').innerHTML = section3Rows.map(answerRowHTML).join('');
+
+  document.getElementById('summaryTable').innerHTML = summaryRows.map(row =>
+    '<tr><td class="metric-name">' + row.label + '<span class="formula-hint">' + row.hint + '</span></td>' +
+    '<td class="metric-value">' + (row.isRatio ? row.answer.toFixed(2) : fmt(Math.round(row.answer)) + ' THB') + '</td></tr>'
+  ).join('');
+</script>
+
+</body>
+</html>

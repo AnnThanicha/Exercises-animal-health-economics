@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Partial Budget — Worked Example</title>
+<style>
+  :root {
+    --ink: #1f2a24;
+    --muted: #5b6b62;
+    --line: #d8e0da;
+    --accent: #2f6b4f;
+    --accent-light: #e8f2ec;
+    --bg: #fbfaf7;
+    --card: #ffffff;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Georgia", "Iowan Old Style", serif;
+    background: var(--bg);
+    color: var(--ink);
+    margin: 0;
+    padding: 0 20px 60px;
+    line-height: 1.55;
+  }
+  .page { max-width: 780px; margin: 0 auto; }
+  header.title-block {
+    border-bottom: 3px solid var(--accent);
+    padding: 36px 0 20px;
+    margin-bottom: 30px;
+  }
+  h1 {
+    font-size: 1.6rem;
+    margin: 0 0 10px;
+    color: var(--accent);
+    font-family: "Helvetica Neue", Arial, sans-serif;
+  }
+  .meta { font-family: "Helvetica Neue", Arial, sans-serif; font-size: 0.95rem; color: var(--muted); }
+  h2 {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 1.15rem;
+    color: var(--accent);
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 6px;
+    margin-top: 42px;
+  }
+  p { margin: 12px 0; }
+  pre {
+    font-family: "SFMono-Regular", Consolas, Menlo, monospace;
+    font-size: 0.92rem;
+    background: #f1f5f2;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 14px 16px;
+    overflow-x: auto;
+    margin: 14px 0;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0 10px;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 0.95rem;
+  }
+  th, td {
+    border: 1px solid var(--line);
+    padding: 10px 14px;
+    text-align: left;
+    vertical-align: top;
+  }
+  th { background: var(--accent-light); color: var(--accent); font-weight: 600; }
+  .concept-table th, .concept-table td { text-align: left; }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--accent);
+    border-radius: 6px;
+    padding: 20px 24px;
+    margin: 18px 0;
+  }
+  .worked-tag {
+    display: inline-block;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: var(--accent);
+    color: #fff;
+    padding: 3px 10px;
+    border-radius: 999px;
+    margin-bottom: 12px;
+  }
+  .net-highlight {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+    background: var(--accent-light);
+    color: var(--accent);
+    padding: 12px 16px;
+    border-radius: 6px;
+    margin: 14px 0;
+  }
+  footer {
+    margin-top: 50px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<header class="title-block">
+  <h1>Partial Budget Analysis — Worked Example</h1>
+  <div class="meta">A simple, fully-solved illustration showing all four quadrants of a partial budget before students attempt the practice scenarios.</div>
+</header>
+
+<h2>What Is a Partial Budget?</h2>
+<p>A partial budget estimates the <strong>financial effect of a small, specific change</strong> in a farm enterprise. It only asks: <em>if we make this one change, what happens to profit?</em></p>
+
+<table class="concept-table">
+  <tr><th>Increases profit</th><th>Decreases profit</th></tr>
+  <tr>
+    <td><strong>A. Added revenue</strong> — new income gained from the change</td>
+    <td><strong>C. Reduced revenue</strong> — income lost because of the change</td>
+  </tr>
+  <tr>
+    <td><strong>B. Reduced costs</strong> — costs avoided because of the change</td>
+    <td><strong>D. Added costs</strong> — new costs from the change</td>
+  </tr>
+</table>
+
+<p><strong>Formula:</strong></p>
+<pre>Net change in profit = (A + B) − (C + D)</pre>
+
+<h2>Worked Example</h2>
+<div class="card">
+  <span class="worked-tag">Fully Solved</span>
+  <p><strong>Scenario:</strong> A 60-cow dairy herd currently uses a bull for natural service breeding. The farm is considering switching entirely to artificial insemination (AI) using purchased semen.</p>
+
+  <table>
+    <tr><th>Item</th><th>Category</th><th>Amount (THB/year)</th></tr>
+    <tr><td>Higher milk yield from improved genetics</td><td>A. Added revenue</td><td>35,000</td></tr>
+    <tr><td>No longer feeding and housing the bull</td><td>B. Reduced cost</td><td>20,000</td></tr>
+    <tr><td>Lost stud fee income (neighboring farms paid to use the bull)</td><td>C. Reduced revenue</td><td>8,000</td></tr>
+    <tr><td>AI service visits and semen straws</td><td>D. Added cost</td><td>40,000</td></tr>
+  </table>
+
+  <p><strong>Calculation:</strong></p>
+  <pre>Net change = (35,000 + 20,000) − (8,000 + 40,000)
+           = 55,000 − 48,000
+           = +7,000 THB/year</pre>
+
+  <div class="net-highlight">Net change in profit: +7,000 THB/year</div>
+
+  <p><strong>Interpretation:</strong> Switching to AI is expected to increase annual profit by 7,000 THB — a modest but positive gain. Notice that all four quadrants had a real value here: the change created new revenue (A), avoided a cost (B), gave up an old revenue source (C), and introduced a new cost (D). A recommendation should also weigh non-financial factors not captured in the numbers, such as genetic improvement and reduced disease transmission risk from natural service.</p>
+</div>
+
+<footer>
+  <p>Practice scenarios: <code>partial_budget_exercise.html</code> &nbsp;·&nbsp; Answer key: <code>partial_budget_answers.html</code></p>
+</footer>
+
+</div>
+</body>
+</html>

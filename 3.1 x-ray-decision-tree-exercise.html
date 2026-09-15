@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Decision Tree Practice — Buddy's Case</title>
+<style>
+  :root{
+    --bg: #F3F6F4;
+    --surface: #FFFFFF;
+    --line: #D8E3DE;
+    --ink: #1E2B29;
+    --ink-soft: #57655F;
+    --teal: #23554C;
+    --teal-soft: #E4EEEA;
+    --amber: #B8712A;
+    --amber-soft: #F6E9D8;
+    --good: #2E7A4F;
+    --good-soft: #E4F2E8;
+    --bad: #B3413A;
+    --bad-soft: #FBE7E4;
+  }
+  *{ box-sizing: border-box; }
+  body{
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.5;
+    padding: 32px 16px 64px;
+  }
+  .page{ max-width: 920px; margin: 0 auto; }
+  h1{
+    font-family: Georgia, "Iowan Old Style", "Palatino Linotype", serif;
+    font-size: 1.7rem; font-weight: 600; margin: 0 0 6px; color: var(--teal);
+  }
+  .kicker{ font-size: 0.8rem; letter-spacing: 0.02em; color: var(--ink-soft); margin: 0 0 18px; }
+  .intro{
+    background: var(--surface); border: 1px solid var(--line); border-radius: 10px;
+    padding: 18px 20px; font-size: 0.95rem; color: var(--ink-soft); margin-bottom: 20px;
+  }
+  .intro strong{ color: var(--ink); }
+  .intro code{
+    background: var(--teal-soft); color: var(--teal); padding: 1px 6px; border-radius: 4px;
+    font-family: Georgia, serif; font-style: italic;
+  }
+  .legend{ display: flex; flex-wrap: wrap; gap: 18px; font-size: 0.82rem; color: var(--ink-soft); margin-bottom: 22px; }
+  .legend span{ display: inline-flex; align-items: center; gap: 6px; }
+  .legend b{ font-size: 1rem; }
+
+  .case-card{
+    background: var(--surface); border: 1px solid var(--line); border-radius: 10px;
+    padding: 16px 20px; margin-bottom: 26px;
+  }
+  .case-card h2{ font-size: 1rem; margin: 0 0 8px; color: var(--teal); }
+  .case-card p{ margin: 0 0 8px; font-size: 0.9rem; color: var(--ink-soft); }
+  .case-card p:last-child{ margin-bottom: 0; }
+  .case-card .note{ font-size: 0.78rem; color: var(--amber); margin-top: 8px; }
+
+  .diagram-wrap{ overflow-x: auto; margin-bottom: 8px; padding-bottom: 6px; }
+  .diagram-wrap svg{ display: block; }
+
+  .branch{ fill: none; stroke: #B9CAC3; stroke-width: 2; }
+
+  .node{
+    width: 100%; height: 100%;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 8px;
+    padding: 10px 12px; overflow: hidden; font-family: inherit;
+  }
+  .node .tag{ font-size: 0.68rem; letter-spacing: 0.02em; color: var(--ink-soft); }
+  .node .title{ font-weight: 600; font-size: 0.82rem; margin: 2px 0 8px; }
+
+  .node.decision{ border-color: var(--teal); background: var(--teal-soft); display:flex; flex-direction:column; justify-content:center; }
+  .node.decision .tag{ color: var(--teal); }
+  .node.decision .title{ margin-bottom: 0; font-size: 0.86rem; }
+
+  .node.chance{ border-color: var(--amber); }
+  .node.chance .tag{ color: var(--amber); }
+
+  .node.leaf .fact-label{ font-size: 0.78rem; }
+
+  .ev-row{ display: flex; align-items: center; gap: 6px; font-size: 0.78rem; margin-top: 6px; }
+  .ev-row span{ color: var(--ink-soft); white-space: nowrap; }
+  .ev-row input{
+    width: 72px; padding: 4px 6px; border: 1px solid var(--line); border-radius: 5px;
+    font-size: 0.82rem; font-family: inherit;
+  }
+  .ev-row input:focus{ outline: 2px solid var(--teal); outline-offset: 1px; }
+  .ev-row input.correct{ border-color: var(--good); background: var(--good-soft); }
+  .ev-row input.incorrect{ border-color: var(--bad); background: var(--bad-soft); }
+
+  .decision-panel{
+    background: var(--surface); border: 1px solid var(--line); border-radius: 10px;
+    padding: 18px 20px; margin-top: 26px;
+  }
+  .decision-panel h3{ margin: 0 0 4px; font-size: 1rem; }
+  .decision-panel .helper{ margin: 0 0 12px; font-size: 0.85rem; color: var(--ink-soft); }
+  .radio-group{ display: flex; flex-direction: column; gap: 8px; }
+  .radio-option{
+    display: flex; align-items: center; gap: 8px; font-size: 0.92rem; padding: 8px 10px;
+    border: 1px solid var(--line); border-radius: 7px; cursor: pointer;
+  }
+  .radio-option:has(input:checked){ border-color: var(--teal); background: var(--teal-soft); }
+  .radio-option input{ accent-color: var(--teal); }
+
+  .actions{ display: flex; gap: 10px; margin-top: 22px; flex-wrap: wrap; }
+  .btn{ font-family: inherit; font-size: 0.9rem; padding: 10px 18px; border-radius: 7px; border: 1px solid transparent; cursor: pointer; }
+  .btn-primary{ background: var(--teal); color: #fff; }
+  .btn-primary:hover{ background: #1a453d; }
+  .btn-ghost{ background: var(--surface); border-color: var(--line); color: var(--ink); }
+  .btn-ghost:hover{ border-color: var(--teal); color: var(--teal); }
+
+  .feedback{ margin-top: 22px; display: none; }
+  .feedback.show{ display: block; }
+  .feedback-item{
+    display: flex; gap: 10px; align-items: flex-start; background: var(--surface);
+    border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; margin-bottom: 8px; font-size: 0.88rem;
+  }
+  .feedback-item .icon{ font-size: 1.05rem; line-height: 1.4; }
+  .feedback-item.correct{ border-color: var(--good); }
+  .feedback-item.correct .icon{ color: var(--good); }
+  .feedback-item.incorrect{ border-color: var(--bad); }
+  .feedback-item.incorrect .icon{ color: var(--bad); }
+  .feedback-item .detail{ color: var(--ink-soft); margin-top: 2px; }
+  .summary{ font-weight: 600; margin-bottom: 12px; font-size: 0.96rem; }
+  .score-note{ font-size: 0.8rem; color: var(--ink-soft); margin-bottom: 14px; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <p class="kicker">DECISION TREE ANALYSIS — PRACTICE EXERCISE</p>
+  <h1>Should the vet X-ray first, or go straight to surgery?</h1>
+
+  <div class="intro">
+    A decision tree compares choices when the outcome is uncertain. At each
+    <strong>chance node</strong> (●), something happens with a certain probability, and each
+    result carries a cost. The <strong>expected cost</strong> of a chance node is found by
+    multiplying each branch's probability by its cost, then adding the results:
+    <br><br>
+    <code>expected cost = (P₁ × cost₁) + (P₂ × cost₂)</code>
+    <br><br>
+    Read the case notes below, then fill in the <strong>probability</strong> and
+    <strong>cost</strong> for each outcome directly on the diagram, calculate the expected cost
+    of each option, and choose the recommendation. Check your answers when you're done.
+  </div>
+
+  <div class="legend">
+    <span><b>■</b> decision node</span>
+    <span><b>●</b> chance node</span>
+    <span><b>▲</b> outcome (terminal) node</span>
+  </div>
+
+  <div class="case-card">
+    <h2>🐾 Buddy — 3-year-old Labrador</h2>
+    <img src="data:image/jpeg;base64,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" alt="Dog positioned on a veterinary digital X-ray table" style="width:100%;max-width:320px;border-radius:10px;border:1px solid var(--line);display:block;margin:0 auto 14px;">
+    <p>Buddy is brought in with sudden vomiting and lethargy after a day of chewing on toys in
+    the yard. The vet suspects an intestinal foreign body. Two options are on the table.</p>
+    <div id="caseNotes"></div>
+    <p class="note">Enter probabilities as decimals (e.g. 60% → 0.60), not percentages.</p>
+  </div>
+
+  <div class="diagram-wrap">
+    <svg viewBox="0 0 860 780" width="860" height="780" xmlns="http://www.w3.org/2000/svg">
+      <path class="branch" d="M200,390 C235,390 235,205 260,205"/>
+      <path class="branch" d="M200,390 C235,390 235,575 260,575"/>
+      <path class="branch" d="M510,205 C545,205 545,115 580,115"/>
+      <path class="branch" d="M510,205 C545,205 545,295 580,295"/>
+      <path class="branch" d="M510,575 C545,575 545,485 580,485"/>
+      <path class="branch" d="M510,575 C545,575 545,665 580,665"/>
+
+      <foreignObject x="10" y="330" width="190" height="120">
+        <div xmlns="http://www.w3.org/1999/xhtml" class="node decision">
+          <div class="tag">■ decision</div>
+          <div class="title">Which option should the vet take?</div>
+        </div>
+      </foreignObject>
+
+      <foreignObject x="260" y="120" width="250" height="170">
+        <div xmlns="http://www.w3.org/1999/xhtml" class="node chance">
+          <div class="tag">● chance node</div>
+          <div class="title">Option A — X-ray first</div>
+          <div class="ev-row"><span>Expected cost (฿) =</span>
+            <input type="number" step="1" id="evA" placeholder="0"></div>
+        </div>
+      </foreignObject>
+
+      <foreignObject x="260" y="490" width="250" height="170">
+        <div xmlns="http://www.w3.org/1999/xhtml" class="node chance">
+          <div class="tag">● chance node</div>
+          <div class="title">Option B — Straight to surgery</div>
+          <div class="ev-row"><span>Expected cost (฿) =</span>
+            <input type="number" step="1" id="evB" placeholder="0"></div>
+        </div>
+      </foreignObject>
+
+      <foreignObject x="580" y="40" width="260" height="150">
+        <div xmlns="http://www.w3.org/1999/xhtml" class="node leaf">
+          <div class="tag">▲ outcome</div>
+          <div class="title">X-ray positive → surgery</div>
+          <div class="ev-row"><span>P =</span>
+            <input type="number" step="0.01" min="0" max="1" id="pA1" placeholder="0.00"></div>
+          <div class="ev-row"><span>Cost (฿) =</span>
+            <input type="number" step="1" id="cA1" placeholder="0"></div>
+        </div>
+      </foreignObject>
+
+      <foreignObject x="580" y="220" width="260" height="150">
+        <div xmlns="http://www.w3.org/1999/xhtml" class="node leaf">
+          <div class="tag">▲ outcome</div>
+          <div class="title">X-ray negative → conservative care</div>
+          <div class="ev-row"><span>P =</span>
+            <input type="number" step="0.01" min="0" max="1" id="pA2" placeholder="0.00"></div>
+          <div class="ev-row"><span>Cost (฿) =</span>
+            <input type="number" step="1" id="cA2" placeholder="0"></div>
+        </div>
+      </foreignObject>
+
+      <foreignObject x="580" y="410" width="260" height="150">
+        <div xmlns="http://www.w3.org/1999/xhtml" class="node leaf">
+          <div class="tag">▲ outcome</div>
+          <div class="title">Foreign body found at surgery</div>
+          <div class="ev-row"><span>P =</span>
+            <input type="number" step="0.01" min="0" max="1" id="pB1" placeholder="0.00"></div>
+          <div class="ev-row"><span>Cost (฿) =</span>
+            <input type="number" step="1" id="cB1" placeholder="0"></div>
+        </div>
+      </foreignObject>
+
+      <foreignObject x="580" y="590" width="260" height="150">
+        <div xmlns="http://www.w3.org/1999/xhtml" class="node leaf">
+          <div class="tag">▲ outcome</div>
+          <div class="title">Nothing found (unnecessary surgery)</div>
+          <div class="ev-row"><span>P =</span>
+            <input type="number" step="0.01" min="0" max="1" id="pB2" placeholder="0.00"></div>
+          <div class="ev-row"><span>Cost (฿) =</span>
+            <input type="number" step="1" id="cB2" placeholder="0"></div>
+        </div>
+      </foreignObject>
+    </svg>
+  </div>
+
+  <div class="decision-panel">
+    <h3>Final recommendation</h3>
+    <p class="helper">Based on your two expected costs above, which option should the vet recommend?</p>
+    <div class="radio-group">
+      <label class="radio-option"><input type="radio" name="decision" value="A"> Option A — X-ray first</label>
+      <label class="radio-option"><input type="radio" name="decision" value="B"> Option B — Straight to surgery</label>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button class="btn btn-primary" onclick="checkAnswers()">Check my answers</button>
+    <button class="btn btn-ghost" onclick="newScenario()">Try new numbers</button>
+  </div>
+
+  <div class="feedback" id="feedback"></div>
+
+</div>
+
+<script>
+  let s = {};
+  const leafIds = ['pA1','cA1','pA2','cA2','pB1','cB1','pB2','cB2'];
+
+  function roundStep(v, step){ return Math.round(v/step)*step; }
+  function baht(n){ return '฿' + Math.round(n).toLocaleString('en-US'); }
+  function pct(p){ return Math.round(p*100); }
+
+  function generateScenario(){
+    const pA = roundStep(0.40 + Math.random()*0.35, 0.05);
+    const pB = roundStep(0.35 + Math.random()*0.35, 0.05);
+    const costXray = 1500;
+    const costSurgery = roundStep(15000 + Math.random()*5000, 500);
+    const costConservative = roundStep(3000 + Math.random()*3000, 500);
+    const followUp = roundStep(1500 + Math.random()*1500, 500);
+
+    const OA1 = costXray + costSurgery;
+    const OA2 = costXray + costConservative;
+    const OB1 = costSurgery;
+    const OB2 = costSurgery + followUp;
+
+    const evA = pA*OA1 + (1-pA)*OA2;
+    const evB = pB*OB1 + (1-pB)*OB2;
+    const correctDecision = evA <= evB ? 'A' : 'B';
+
+    return { pA, pB, OA1, OA2, OB1, OB2, evA, evB, correctDecision };
+  }
+
+  function render(){
+    document.getElementById('caseNotes').innerHTML = `
+      <p><strong>If X-rayed:</strong> there is a ${pct(s.pA)}% chance the foreign body is visible,
+      requiring surgery (total cost including the X-ray: ${baht(s.OA1)}). Otherwise
+      (${pct(1-s.pA)}% chance), the X-ray is negative and Buddy is managed conservatively
+      (total cost including the X-ray: ${baht(s.OA2)}).</p>
+      <p><strong>If taken straight to surgery:</strong> there is a ${pct(s.pB)}% chance a foreign
+      body is actually found and removed (cost: ${baht(s.OB1)}). Otherwise (${pct(1-s.pB)}%
+      chance), nothing is found — an unnecessary surgery plus extra monitoring
+      (cost: ${baht(s.OB2)}).</p>`;
+
+    ['evA','evB', ...leafIds].forEach(id => {
+      const el = document.getElementById(id);
+      el.value = '';
+      el.classList.remove('correct','incorrect');
+    });
+    document.querySelectorAll('input[name="decision"]').forEach(r => r.checked = false);
+
+    const fb = document.getElementById('feedback');
+    fb.classList.remove('show');
+    fb.innerHTML = '';
+  }
+
+  function num(id){ return parseFloat(document.getElementById(id).value); }
+  function mark(id, ok){
+    const el = document.getElementById(id);
+    el.classList.remove('correct','incorrect');
+    el.classList.add(ok ? 'correct' : 'incorrect');
+  }
+
+  function checkAnswers(){
+    let correctCount = 0;
+    const total = 11; // 8 leaf fields + 2 EVs + 1 decision
+
+    const checks = [
+      ['pA1', s.pA, 0.011], ['cA1', s.OA1, Math.max(50, s.OA1*0.01)],
+      ['pA2', 1-s.pA, 0.011], ['cA2', s.OA2, Math.max(50, s.OA2*0.01)],
+      ['pB1', s.pB, 0.011], ['cB1', s.OB1, Math.max(50, s.OB1*0.01)],
+      ['pB2', 1-s.pB, 0.011], ['cB2', s.OB2, Math.max(50, s.OB2*0.01)],
+      ['evA', s.evA, Math.max(50, s.evA*0.01)],
+      ['evB', s.evB, Math.max(50, s.evB*0.01)],
+    ];
+
+    checks.forEach(([id, correct, tol]) => {
+      const v = num(id);
+      const ok = !isNaN(v) && Math.abs(v - correct) <= tol;
+      mark(id, ok);
+      if(ok) correctCount++;
+    });
+
+    const decisionEl = document.querySelector('input[name="decision"]:checked');
+    const userDecision = decisionEl ? decisionEl.value : null;
+    const okDecision = userDecision === s.correctDecision;
+    if(okDecision) correctCount++;
+
+    const allCorrect = correctCount === total;
+
+    let html = `<div class="summary">${allCorrect ? '✓ All correct — nice work.' : `${correctCount} of ${total} correct — check the highlighted fields on the diagram.`}</div>`;
+    html += `<div class="score-note">Green border = correct, red border = worth another look.</div>`;
+
+    html += feedbackRow(
+      Math.abs((num('evA')||NaN) - s.evA) <= Math.max(50, s.evA*0.01),
+      'Expected cost of Option A',
+      `Correct: ${baht(s.evA)} = (P × cost) + (P × cost) added across both outcome branches, using the probabilities and costs you entered for Option A's two outcomes.`
+    );
+    html += feedbackRow(
+      Math.abs((num('evB')||NaN) - s.evB) <= Math.max(50, s.evB*0.01),
+      'Expected cost of Option B',
+      `Correct: ${baht(s.evB)} — same idea, using Option B's two outcome branches.`
+    );
+    html += feedbackRow(okDecision, 'Final recommendation',
+      `Option ${s.correctDecision} has the lower expected cost (${baht(Math.min(s.evA,s.evB))} vs ${baht(Math.max(s.evA,s.evB))}), so it's the better recommendation.`
+    );
+
+    const fb = document.getElementById('feedback');
+    fb.innerHTML = html;
+    fb.classList.add('show');
+  }
+
+  function feedbackRow(isCorrect, label, detail){
+    return `<div class="feedback-item ${isCorrect ? 'correct' : 'incorrect'}">
+      <div class="icon">${isCorrect ? '✓' : '✗'}</div>
+      <div><div>${label}</div>${!isCorrect ? `<div class="detail">${detail}</div>` : ''}</div>
+    </div>`;
+  }
+
+  function newScenario(){
+    s = generateScenario();
+    render();
+  }
+
+  newScenario();
+</script>
+</body>
+</html>
