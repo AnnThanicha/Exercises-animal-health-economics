@@ -361,7 +361,7 @@
       <li>Milk yield: 60 L/ewe/yr (sheep), 115 L/doe/yr (goats)</li>
       <li>Milk price: 0.609 EUR/L (sheep), 1.307 EUR/L (goats)</li>
       <li>&Delta;P (from the epidemiological model): <strong>0% in Year 1</strong> (too early for the
-        vaccination effect to show up), <strong>≈1.93% in Year 2</strong>, <strong>≈4.03% in
+        vaccination effect to show up), <strong>1.9% in Year 2</strong>, <strong>4% in
         Year 3</strong></li>
       <li>Avoided abortion value — sheep = &Delta;P &times; sheep population &times; reduction in
         reproduction &times; sheep reproduction rate &times; price per lamb</li>
@@ -401,9 +401,9 @@
     </tbody>
   </table>
   <p class="unit-note">
-    Because &Delta;P comes from a simulation rather than a round number, your Year 2 and Year 3
-    totals should land close to — but may not exactly match, to the last euro — the "Avoided
-    infections in animals" figures given for those years in the tables below.
+    &Delta;P has been rounded to make the hand calculation easier, so your Year 2 and Year 3
+    totals will be close to, but slightly below, the published "Avoided infections in animals"
+    figures used in the tables below.
   </p>
 
   <div class="assumption-note">Discount rate: r = 7.74% per year (given)</div>
@@ -630,16 +630,16 @@
     { id: 'ab_goatabort_y1', target: 0, tol: 'exact' },
     { id: 'ab_goatmilk_y1', target: 0, tol: 'exact' },
     { id: 'ab_total_y1', target: 0, tol: 'exact' },
-    { id: 'ab_sheepabort_y2', target: 496119, tol: 'money' },
-    { id: 'ab_sheepmilk_y2', target: 87967, tol: 'money' },
-    { id: 'ab_goatabort_y2', target: 44550, tol: 'money' },
-    { id: 'ab_goatmilk_y2', target: 23106, tol: 'money' },
-    { id: 'ab_total_y2', target: 651741, tol: 'money' },
-    { id: 'ab_sheepabort_y3', target: 1033416, tol: 'money' },
-    { id: 'ab_sheepmilk_y3', target: 183235, tol: 'money' },
-    { id: 'ab_goatabort_y3', target: 92797, tol: 'money' },
-    { id: 'ab_goatmilk_y3', target: 48129, tol: 'money' },
-    { id: 'ab_total_y3', target: 1357577, tol: 'money' }
+    { id: 'ab_sheepabort_y2', target: 487482, tol: 'money' },
+    { id: 'ab_sheepmilk_y2', target: 86435, tol: 'money' },
+    { id: 'ab_goatabort_y2', target: 43774, tol: 'money' },
+    { id: 'ab_goatmilk_y2', target: 22704, tol: 'money' },
+    { id: 'ab_total_y2', target: 640395, tol: 'money' },
+    { id: 'ab_sheepabort_y3', target: 1026278, tol: 'money' },
+    { id: 'ab_sheepmilk_y3', target: 181969, tol: 'money' },
+    { id: 'ab_goatabort_y3', target: 92156, tol: 'money' },
+    { id: 'ab_goatmilk_y3', target: 47797, tol: 'money' },
+    { id: 'ab_total_y3', target: 1348201, tol: 'money' }
   ];
 
   // ---- Checking ----

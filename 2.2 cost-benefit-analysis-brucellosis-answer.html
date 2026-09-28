@@ -81,6 +81,24 @@
   .decision-box strong { font-family: var(--font-head); font-size: 1.0rem; }
   .decision-box + .decision-box { margin-top: 0.8rem; }
 
+  /* ---- Worked calculation blocks ---- */
+  details.working { background: #fff; border: 1px dashed var(--straw-gold); border-radius: 6px; padding: 0.7rem 1.1rem; margin: 0.2rem 0 1.5rem; font-size: 0.88rem; }
+  details.working > summary { cursor: pointer; font-weight: 700; color: var(--barn-red-dark); font-family: var(--font-head); font-size: 0.97rem; }
+  details.working[open] > summary { margin-bottom: 0.5rem; }
+  .work-step { margin: 0.7rem 0 0.2rem; font-weight: 700; color: var(--pasture-green-dark); }
+  .calc { font-family: Consolas, 'SF Mono', Menlo, monospace; font-size: 0.82rem; line-height: 1.75; background: var(--cream); border-left: 3px solid var(--pasture-green); padding: 0.45rem 0.8rem; margin: 0.25rem 0 0.4rem; overflow-x: auto; white-space: nowrap; }
+  .calc .res { font-weight: 700; color: var(--answer-green-text); background: var(--answer-green); padding: 0 0.25rem; border-radius: 2px; }
+  .calc .lbl { color: var(--muted); display: inline-block; min-width: 7.5rem; }
+  .work-note { color: var(--muted); font-size: 0.82rem; font-style: italic; margin: 0.4rem 0 0.2rem; }
+  table.work-table { width: 100%; min-width: 1020px; border-collapse: collapse; font-size: 0.8rem; }
+  table.work-table th { background: var(--pasture-green); color: var(--cream); text-align: right; padding: 0.4rem 0.5rem; font-size: 0.75rem; white-space: nowrap; }
+  table.work-table th:first-child { text-align: left; }
+  table.work-table td { padding: 0.4rem 0.5rem; border-top: 1px solid var(--border); text-align: right; vertical-align: top; font-variant-numeric: tabular-nums; }
+  table.work-table td:first-child { text-align: left; font-weight: 600; white-space: nowrap; }
+  table.work-table .f { display: block; color: var(--muted); font-size: 0.72rem; font-family: Consolas, 'SF Mono', Menlo, monospace; white-space: nowrap; }
+  table.work-table .r { display: block; font-weight: 700; color: var(--answer-green-text); }
+  @media print { details.working { break-inside: avoid; } }
+
   footer { max-width: 1120px; margin: 0 auto; padding: 0 1.5rem 2rem; color: var(--muted); font-size: 0.82rem; }
 </style>
 </head>
@@ -127,21 +145,148 @@
 
   <h3 class="sub-title">Vaccination cost — Year 1–3</h3>
   <table class="mini" id="vaccCostMini"></table>
+  <details class="working" open>
+    <summary>Show calculation steps — vaccination cost</summary>
+    <div class="work-step">Step 1. Cost per animal</div>
+    <div class="calc">
+      <span class="lbl">Vaccinated animal</span> 0.135 + 1.55 + 0.10 = <span class="res">1.785 EUR</span><br>
+      <span class="lbl">Tested animal</span> 2.55 + 2.55 = <span class="res">5.10 EUR</span>
+    </div>
+    <div class="work-step">Step 2. Sheep (population 830,000)</div>
+    <div class="calc">
+      <span class="lbl">Year 1 (83.3%)</span> 830,000 × 0.833 × 1.785 = 691,390 × 1.785 = 1,234,131.15<br>
+      <span class="lbl">+ testing</span> 830,000 × 0.05 × 5.10 = 41,500 × 5.10 = 211,650<br>
+      <span class="lbl">Total</span> 1,234,131.15 + 211,650 = <span class="res">1,445,781</span><br>
+      <span class="lbl">Year 2–3 (20.2%)</span> 830,000 × 0.202 × 1.785 = 167,660 × 1.785 = 299,273.10<br>
+      <span class="lbl">+ testing</span> 211,650 (same every year)<br>
+      <span class="lbl">Total</span> 299,273.10 + 211,650 = <span class="res">510,923</span>
+    </div>
+    <div class="work-step">Step 3. Goats (population 53,000)</div>
+    <div class="calc">
+      <span class="lbl">Year 1 (83.3%)</span> 53,000 × 0.833 × 1.785 = 44,149 × 1.785 = 78,805.97<br>
+      <span class="lbl">+ testing</span> 53,000 × 0.05 × 5.10 = 2,650 × 5.10 = 13,515<br>
+      <span class="lbl">Total</span> 78,805.97 + 13,515 = <span class="res">92,321</span><br>
+      <span class="lbl">Year 2–3 (20.2%)</span> 53,000 × 0.202 × 1.785 = 10,706 × 1.785 = 19,110.21<br>
+      <span class="lbl">Total</span> 19,110.21 + 13,515 = <span class="res">32,625</span>
+    </div>
+    <div class="work-step">Step 4. Total vaccination costs (sheep + goats)</div>
+    <div class="calc">
+      <span class="lbl">Year 1</span> 1,445,781 + 92,321 = <span class="res">1,538,102</span><br>
+      <span class="lbl">Year 2 and 3</span> 510,923 + 32,625 = <span class="res">543,548</span>
+    </div>
+    <div class="work-step">Step 5. Fixed program costs (sum of the five given rows)</div>
+    <div class="calc">
+      <span class="lbl">Year 1</span> 30,000 + 40,000 + 24,000 + 10,000 + 193,500 = <span class="res">297,500</span><br>
+      <span class="lbl">Year 2</span> 30,000 + 40,000 + 24,000 + 5,000 + 13,500 = <span class="res">112,500</span><br>
+      <span class="lbl">Year 3</span> 15,000 + 20,000 + 6,000 + 5,000 + 13,500 = <span class="res">59,500</span>
+    </div>
+    <div class="work-step">Step 6. Check against the given total annual cost</div>
+    <div class="calc">
+      <span class="lbl">Year 1</span> 1,538,102 + 297,500 = <span class="res">1,835,602</span> ✓<br>
+      <span class="lbl">Year 2</span> 543,548 + 112,500 = <span class="res">656,048</span> ✓<br>
+      <span class="lbl">Year 3</span> 543,548 + 59,500 = <span class="res">603,048</span> ✓
+    </div>
+  </details>
 
   <h3 class="sub-title">Test-and-slaughter cost — Year 1–3</h3>
   <table class="mini" id="tsCostMini"></table>
+  <details class="working" open>
+    <summary>Show calculation steps — test-and-slaughter cost</summary>
+    <div class="work-step">Step 1. Cost per animal and animals tested each year</div>
+    <div class="calc">
+      <span class="lbl">Tested animal</span> 2.55 + 2.55 = <span class="res">5.10 EUR</span><br>
+      <span class="lbl">Culled animal</span> 120 + 10 = <span class="res">130 EUR</span><br>
+      <span class="lbl">Sheep tested</span> 830,000 × 0.50 = <span class="res">415,000</span><br>
+      <span class="lbl">Goats tested</span> 53,000 × 0.50 = <span class="res">26,500</span>
+    </div>
+    <div class="work-step">Step 2. Prevalence (falls by 37.5% a year, i.e. × 0.625)</div>
+    <div class="calc">
+      <span class="lbl">Year 1</span> <span class="res">4.5%</span><br>
+      <span class="lbl">Year 2</span> 4.5% × (1 − 0.375) = 4.5% × 0.625 = <span class="res">2.8125%</span><br>
+      <span class="lbl">Year 3</span> 2.8125% × 0.625 = <span class="res">1.7578%</span>
+    </div>
+    <div class="work-step">Step 3. Sheep — testing cost (same every year) + culling cost</div>
+    <div class="calc">
+      <span class="lbl">Testing</span> 415,000 × 5.10 = 2,116,500<br>
+      <span class="lbl">Year 1 culling</span> 415,000 × 0.045 = 18,675 culled × 130 = 2,427,750<br>
+      <span class="lbl">Year 1 total</span> 2,116,500 + 2,427,750 = <span class="res">4,544,250</span><br>
+      <span class="lbl">Year 2 culling</span> 415,000 × 0.028125 = 11,671.9 culled × 130 = 1,517,343.75<br>
+      <span class="lbl">Year 2 total</span> 2,116,500 + 1,517,343.75 = <span class="res">3,633,844</span><br>
+      <span class="lbl">Year 3 culling</span> 415,000 × 0.017578 = 7,294.9 culled × 130 = 948,339.84<br>
+      <span class="lbl">Year 3 total</span> 2,116,500 + 948,339.84 = <span class="res">3,064,840</span>
+    </div>
+    <div class="work-step">Step 4. Goats — testing cost + culling cost</div>
+    <div class="calc">
+      <span class="lbl">Testing</span> 26,500 × 5.10 = 135,150<br>
+      <span class="lbl">Year 1 culling</span> 26,500 × 0.045 = 1,192.5 culled × 130 = 155,025<br>
+      <span class="lbl">Year 1 total</span> 135,150 + 155,025 = <span class="res">290,175</span><br>
+      <span class="lbl">Year 2 culling</span> 26,500 × 0.028125 = 745.3 culled × 130 = 96,890.63<br>
+      <span class="lbl">Year 2 total</span> 135,150 + 96,890.63 = <span class="res">232,041</span><br>
+      <span class="lbl">Year 3 culling</span> 26,500 × 0.017578 = 465.8 culled × 130 = 60,556.64<br>
+      <span class="lbl">Year 3 total</span> 135,150 + 60,556.64 = <span class="res">195,707</span>
+    </div>
+    <div class="work-step">Step 5. Check against the given total annual cost</div>
+    <div class="calc">
+      <span class="lbl">Year 1</span> 4,544,250 + 290,175 = <span class="res">4,834,425</span> ✓<br>
+      <span class="lbl">Year 2</span> 3,633,843.75 + 232,040.63 = <span class="res">3,865,884</span> ✓<br>
+      <span class="lbl">Year 3</span> 3,064,839.84 + 195,706.64 = <span class="res">3,260,546</span> ✓
+    </div>
+    <p class="work-note">Add the unrounded values before rounding. Adding the rounded sheep and goat figures gives
+      3,865,885 in Year 2, one euro off the published total.</p>
+  </details>
 
   <h3 class="sub-title">Avoided human-case benefit — Year 1–3</h3>
   <table class="mini" id="humanBenefitMini"></table>
+  <details class="working" open>
+    <summary>Show calculation steps — avoided human-case benefit</summary>
+    <div class="work-step">Step 1. Cost per human case</div>
+    <div class="calc">
+      <span class="lbl">All years</span> 700 + 450 + 500 + 300 = <span class="res">1,950 EUR</span>
+    </div>
+    <div class="work-step">Step 2. Avoided cases × cost per case</div>
+    <div class="calc">
+      <span class="lbl">Year 1</span> 0 × 1,950 = <span class="res">0</span><br>
+      <span class="lbl">Year 2</span> 402.57 × 1,950 = <span class="res">785,012</span> &nbsp;(403 × 1,950 = 785,850)<br>
+      <span class="lbl">Year 3</span> 742.74 × 1,950 = <span class="res">1,448,346</span> &nbsp;(743 × 1,950 = 1,448,850)
+    </div>
+    <p class="work-note">The model's avoided case counts are not whole numbers (402.57 and 742.74). The exercise
+      rounds them to 403 and 743, so a hand calculation lands about 0.1% above the published figure.
+      The published figure is used in the tables below.</p>
+  </details>
 
   <h3 class="sub-title">Avoided animal-loss benefit — Year 1–3</h3>
   <table class="mini" id="animalBenefitMini"></table>
-  <p style="color:var(--muted); font-size:0.85rem;">
-    ΔP (from the epidemiological model): 0% in Year 1, ≈1.93% in Year 2, ≈4.03% in Year 3. Because
-    ΔP comes from a simulation rather than a round number, the Year 2 and Year 3 totals
-    (≈651,700 and ≈1,357,600 EUR) land close to, but not exactly on, the published figures of
-    651,741 and 1,357,577 EUR used in the tables below.
-  </p>
+  <details class="working" open>
+    <summary>Show calculation steps — avoided animal-loss benefit</summary>
+    <div class="work-step">Step 1. Loss value per 100% prevalence (everything in the formula except ΔP)</div>
+    <div class="calc">
+      <span class="lbl">Sheep abortion</span> 830,000 × 0.322 × 1.2 × 80 = <span class="res">25,656,960</span><br>
+      <span class="lbl">Sheep milk</span> 830,000 × 0.15 × 60 × 0.609 = <span class="res">4,549,230</span><br>
+      <span class="lbl">Goat abortion</span> 53,000 × 0.322 × 1.5 × 90 = <span class="res">2,303,910</span><br>
+      <span class="lbl">Goat milk</span> 53,000 × 0.15 × 115 × 1.307 = <span class="res">1,194,925</span><br>
+      <span class="lbl">Sum</span> 25,656,960 + 4,549,230 + 2,303,910 + 1,194,925 = <span class="res">33,705,025</span>
+    </div>
+    <div class="work-step">Step 2. Multiply each value by ΔP</div>
+    <div class="calc">
+      <span class="lbl">Year 1 (ΔP = 0)</span> every value × 0 = <span class="res">0</span><br>
+      <span class="lbl">Year 2 (ΔP = 1.9%)</span><br>
+      <span class="lbl">&nbsp;&nbsp;Sheep abortion</span> 25,656,960 × 0.019 = <span class="res">487,482</span><br>
+      <span class="lbl">&nbsp;&nbsp;Sheep milk</span> 4,549,230 × 0.019 = <span class="res">86,435</span><br>
+      <span class="lbl">&nbsp;&nbsp;Goat abortion</span> 2,303,910 × 0.019 = <span class="res">43,774</span><br>
+      <span class="lbl">&nbsp;&nbsp;Goat milk</span> 1,194,925 × 0.019 = <span class="res">22,704</span><br>
+      <span class="lbl">&nbsp;&nbsp;Total</span> 33,705,025 × 0.019 = <span class="res">640,395</span><br>
+      <span class="lbl">Year 3 (ΔP = 4%)</span><br>
+      <span class="lbl">&nbsp;&nbsp;Sheep abortion</span> 25,656,960 × 0.04 = <span class="res">1,026,278</span><br>
+      <span class="lbl">&nbsp;&nbsp;Sheep milk</span> 4,549,230 × 0.04 = <span class="res">181,969</span><br>
+      <span class="lbl">&nbsp;&nbsp;Goat abortion</span> 2,303,910 × 0.04 = <span class="res">92,156</span><br>
+      <span class="lbl">&nbsp;&nbsp;Goat milk</span> 1,194,925 × 0.04 = <span class="res">47,797</span><br>
+      <span class="lbl">&nbsp;&nbsp;Total</span> 33,705,025 × 0.04 = <span class="res">1,348,201</span>
+    </div>
+    <p class="work-note">ΔP is rounded for hand calculation, so these totals are slightly below the published
+      "Avoided infections in animals" figures used in the strategy tables (651,741 in Year 2 and 1,357,577
+      in Year 3). The published figures come from the model's unrounded ΔP. The gap is 1.7% in Year 2
+      and 0.7% in Year 3.</p>
+  </details>
 
   <h2 class="step-title"><span class="step-num">Strategy A</span> Vaccination (Rev 1 vaccine)</h2>
   <div class="table-wrap">
@@ -150,6 +295,10 @@
       <tbody id="vaccBody"></tbody>
     </table>
   </div>
+  <details class="working" open>
+    <summary>Show calculation steps — Strategy A, year by year</summary>
+    <div id="vaccWork"></div>
+  </details>
 
   <h2 class="step-title"><span class="step-num">Strategy B</span> Test-and-slaughter</h2>
   <div class="table-wrap">
@@ -158,9 +307,17 @@
       <tbody id="tsBody"></tbody>
     </table>
   </div>
+  <details class="working" open>
+    <summary>Show calculation steps — Strategy B, year by year</summary>
+    <div id="tsWork"></div>
+  </details>
 
   <h2 class="step-title"><span class="step-num">Summary</span> Compare the two strategies</h2>
   <table class="compare" id="compareTable"></table>
+  <details class="working" open style="margin-top:0.8rem;">
+    <summary>Show calculation steps — summary metrics</summary>
+    <div id="compareWork"></div>
+  </details>
 
   <h2 class="step-title"><span class="step-num">Decision</span> Choose a strategy</h2>
   <div class="decision-box">
@@ -255,11 +412,11 @@
 
   document.getElementById('animalBenefitMini').innerHTML =
     '<thead><tr><th>Item</th><th>Year 1</th><th>Year 2</th><th>Year 3</th></tr></thead><tbody>' +
-    '<tr class="answer-row"><td>Avoided abortion value \u2014 sheep (EUR)</td><td class="num-col">' + fmt(0) + '</td><td class="num-col">' + fmt(496119) + '</td><td class="num-col">' + fmt(1033416) + '</td></tr>' +
-    '<tr class="answer-row"><td>Avoided milk-loss value \u2014 sheep (EUR)</td><td class="num-col">' + fmt(0) + '</td><td class="num-col">' + fmt(87967) + '</td><td class="num-col">' + fmt(183235) + '</td></tr>' +
-    '<tr class="answer-row"><td>Avoided abortion value \u2014 goats (EUR)</td><td class="num-col">' + fmt(0) + '</td><td class="num-col">' + fmt(44550) + '</td><td class="num-col">' + fmt(92797) + '</td></tr>' +
-    '<tr class="answer-row"><td>Avoided milk-loss value \u2014 goats (EUR)</td><td class="num-col">' + fmt(0) + '</td><td class="num-col">' + fmt(23106) + '</td><td class="num-col">' + fmt(48129) + '</td></tr>' +
-    '<tr class="answer-row total-row"><td>Total avoided animal-loss benefit (EUR)</td><td class="num-col">' + fmt(0) + '</td><td class="num-col">' + fmt(651700) + '</td><td class="num-col">' + fmt(1357577) + '</td></tr>' +
+    '<tr class="answer-row"><td>Avoided abortion value \u2014 sheep (EUR)</td><td class="num-col">' + fmt(0) + '</td><td class="num-col">' + fmt(487482) + '</td><td class="num-col">' + fmt(1026278) + '</td></tr>' +
+    '<tr class="answer-row"><td>Avoided milk-loss value \u2014 sheep (EUR)</td><td class="num-col">' + fmt(0) + '</td><td class="num-col">' + fmt(86435) + '</td><td class="num-col">' + fmt(181969) + '</td></tr>' +
+    '<tr class="answer-row"><td>Avoided abortion value \u2014 goats (EUR)</td><td class="num-col">' + fmt(0) + '</td><td class="num-col">' + fmt(43774) + '</td><td class="num-col">' + fmt(92156) + '</td></tr>' +
+    '<tr class="answer-row"><td>Avoided milk-loss value \u2014 goats (EUR)</td><td class="num-col">' + fmt(0) + '</td><td class="num-col">' + fmt(22704) + '</td><td class="num-col">' + fmt(47797) + '</td></tr>' +
+    '<tr class="answer-row total-row"><td>Total avoided animal-loss benefit (EUR)</td><td class="num-col">' + fmt(0) + '</td><td class="num-col">' + fmt(640395) + '</td><td class="num-col">' + fmt(1348201) + '</td></tr>' +
     '</tbody>';
 
   // ---- Strategy tables ----
@@ -333,6 +490,71 @@
   });
   compareHTML += '</tbody>';
   document.getElementById('compareTable').innerHTML = compareHTML;
+
+  // ---- Worked calculation steps (strategy tables) ----
+  const f0 = v => fmt(Math.round(v));
+  const f6 = v => v.toFixed(6);
+  const cellFR = (formula, result) => '<td><span class="f">' + formula + '</span><span class="r">' + result + '</span></td>';
+
+  function strategyWorkHTML(s) {
+    let h = '<div class="work-step">Step 1. Discount factor for each year: 1 ÷ (1 + r)<sup>t</sup>, with r = 0.0774 and t = year − 1</div>';
+    h += '<div class="calc">';
+    discountFactor.forEach((d, t) => {
+      h += '<span class="lbl">' + YEAR_LABELS[t] + ' (t = ' + t + ')</span> 1 ÷ 1.0774<sup>' + t + '</sup> = 1 ÷ ' +
+        Math.pow(1 + R, t).toFixed(4) + ' = <span class="res">' + d.toFixed(4) + '</span><br>';
+    });
+    h += '</div>';
+
+    h += '<div class="work-step">Step 2. Apply the factor to each year’s cost and benefit, then subtract</div>';
+    h += '<div class="table-wrap"><table class="work-table"><thead><tr>' +
+      '<th>Year</th><th>Net value<br>benefit − cost</th><th>Discounted cost<br>cost × factor</th>' +
+      '<th>Discounted benefit<br>benefit × factor</th><th>NPV (per year)<br>disc. benefit − disc. cost</th>' +
+      '<th>Cumulative NPV<br>previous + this year</th></tr></thead><tbody>';
+    s.cost.forEach((c, y) => {
+      const b = s.benefit[y], d = discountFactor[y];
+      const prev = y === 0 ? 0 : s.cumulativeNPV[y - 1];
+      h += '<tr><td>' + YEAR_LABELS[y] + '</td>' +
+        cellFR(f0(b) + ' − ' + f0(c), f0(s.netValue[y])) +
+        cellFR(f0(c) + ' × ' + f6(d), f0(s.discountedCost[y])) +
+        cellFR(f0(b) + ' × ' + f6(d), f0(s.discountedBenefit[y])) +
+        cellFR(f0(s.discountedBenefit[y]) + ' − ' + f0(s.discountedCost[y]), f0(s.npv[y])) +
+        cellFR(y === 0 ? 'Year 1 NPV' : f0(prev) + ' + ' + f0(s.npv[y]), f0(s.cumulativeNPV[y])) +
+        '</tr>';
+    });
+    h += '</tbody></table></div>';
+
+    h += '<div class="work-step">Step 3. Totals across the 8 years</div><div class="calc">' +
+      '<span class="lbl">Σ net value</span> ' + f0(s.benefitSum) + ' − ' + f0(s.costSum) + ' = <span class="res">' + f0(s.benefitSum - s.costSum) + '</span><br>' +
+      '<span class="lbl">Σ disc. cost</span> ' + s.discountedCost.map(f0).join(' + ') + ' = <span class="res">' + f0(s.discCostSum) + '</span><br>' +
+      '<span class="lbl">Σ disc. benefit</span> ' + s.discountedBenefit.map(f0).join(' + ') + ' = <span class="res">' + f0(s.discBenefitSum) + '</span><br>' +
+      '<span class="lbl">NPV</span> ' + f0(s.discBenefitSum) + ' − ' + f0(s.discCostSum) + ' = <span class="res">' + f0(s.npvSum) + '</span>' +
+      ' &nbsp;(= final cumulative NPV)</div>';
+    h += '<p class="work-note">Products are computed with the full-precision discount factor (6 decimals shown). ' +
+      'Using the 4-decimal factor gives results a few euros different per year, well within the exercise checker’s ±1% tolerance. Totals are summed before rounding, so a hand sum of the rounded yearly figures can differ by ±1 euro.</p>';
+    return h;
+  }
+  document.getElementById('vaccWork').innerHTML = strategyWorkHTML(strategies.vacc);
+  document.getElementById('tsWork').innerHTML = strategyWorkHTML(strategies.ts);
+
+  // ---- Worked calculation steps (summary + decision) ----
+  (function () {
+    const v = strategies.vacc, t = strategies.ts;
+    let h = '<div class="work-step">Net present value = total discounted benefit − total discounted cost</div><div class="calc">' +
+      '<span class="lbl">Vaccination</span> ' + f0(v.discBenefitSum) + ' − ' + f0(v.discCostSum) + ' = <span class="res">' + f0(v.npvSum) + ' EUR</span><br>' +
+      '<span class="lbl">Test-and-slaughter</span> ' + f0(t.discBenefitSum) + ' − ' + f0(t.discCostSum) + ' = <span class="res">' + f0(t.npvSum) + ' EUR</span></div>';
+    h += '<div class="work-step">Benefit-cost ratio = total discounted benefit ÷ total discounted cost</div><div class="calc">' +
+      '<span class="lbl">Vaccination</span> ' + f0(v.discBenefitSum) + ' ÷ ' + f0(v.discCostSum) + ' = <span class="res">' + v.bcr.toFixed(2) + '</span><br>' +
+      '<span class="lbl">Test-and-slaughter</span> ' + f0(t.discBenefitSum) + ' ÷ ' + f0(t.discCostSum) + ' = <span class="res">' + t.bcr.toFixed(2) + '</span></div>';
+    const saving = 1 - v.discCostSum / t.discCostSum;
+    h += '<div class="work-step">Figures used in the decision answers</div><div class="calc">' +
+      '<span class="lbl">Cost saving</span> 1 − (' + f0(v.discCostSum) + ' ÷ ' + f0(t.discCostSum) + ') = 1 − ' +
+      (v.discCostSum / t.discCostSum).toFixed(3) + ' = <span class="res">' + (saving * 100).toFixed(1) + '% cheaper</span> (vaccination)<br>' +
+      '<span class="lbl">Extra NPV</span> ' + f0(t.npvSum) + ' − ' + f0(v.npvSum) + ' = <span class="res">' + f0(t.npvSum - v.npvSum) + ' EUR</span> more (test-and-slaughter)<br>' +
+      '<span class="lbl">Extra cost</span> ' + f0(t.discCostSum) + ' − ' + f0(v.discCostSum) + ' = ' + f0(t.discCostSum - v.discCostSum) + ' EUR more spent<br>' +
+      '<span class="lbl">Return on extra</span> ' + f0(t.npvSum - v.npvSum) + ' ÷ ' + f0(t.discCostSum - v.discCostSum) + ' = <span class="res">' +
+      ((t.npvSum - v.npvSum) / (t.discCostSum - v.discCostSum)).toFixed(2) + ' EUR</span> extra NPV per extra euro spent</div>';
+    document.getElementById('compareWork').innerHTML = h;
+  })();
 </script>
 
 </body>
